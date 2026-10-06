@@ -63,7 +63,7 @@ La matriz de trazabilidad y la descripción de los casos de uso están dentro de
 
 ## Video de presentación
 
-[Ver video del grupo](https://drive.google.com/file/d/1HZ8he3dyg9F9lnj_2f-57o_MOJoM8AuJ/view?usp=drive_link)
+[Ver video del grupo](https://drive.google.com/drive/folders/1gsS9DFuTsOJIraWtgkEc1jsuhxYSArl_?usp=drive_link)
 
 ## Estado del proyecto
 
