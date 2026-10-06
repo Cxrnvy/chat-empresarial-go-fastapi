@@ -29,7 +29,7 @@ Cuando una empresa no tiene un canal propio, las conversaciones de trabajo termi
 | Integrante | Usuario de GitHub |
 |---|---|
 | Cesar Bolivar Arciniegas Mejia | Cxrnvy |
-| Ariel Alejandro Guerrero | Arialejo01 |
+| Ariel Alejandro Guerrero Velasco | Arialejo01 |
 | Jorge Emilio Aguilar Gaibor | jeaguilarg007-lang |
 
 ## Estructura del repositorio
