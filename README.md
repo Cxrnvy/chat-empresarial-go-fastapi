@@ -61,6 +61,10 @@ Cuando una empresa no tiene un canal propio, las conversaciones de trabajo termi
 
 La matriz de trazabilidad y la descripción de los casos de uso están dentro del PDF.
 
+## Video de presentación
+
+[Ver video del grupo](https://drive.google.com/file/d/1HZ8he3dyg9F9lnj_2f-57o_MOJoM8AuJ/view?usp=drive_link)
+
 ## Estado del proyecto
 
 - [x] Etapa 1: planeación del software
