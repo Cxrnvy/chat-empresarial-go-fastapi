@@ -46,33 +46,35 @@ Cuando una empresa no tiene un canal propio, las conversaciones de trabajo termi
 │           ├── 02_autenticacion_sesiones.png
 │           ├── 03_mensajeria_historial.png
 │           └── 04_administracion_estadisticas.png
+├── network/         # Fase 2: Prototipo de infraestructura de red
+│   ├── addressing/  # Tablas de direccionamiento VLSM
+│   ├── configs/     # Respaldos de configuración (R-A.txt, SW-A1.txt, etc.)
+│   ├── diagrams/    # Diagrama de arquitectura de red actualizado
+│   ├── packet-tracer/ # Archivo de simulación prototipo_fase2.pkt
+│   └── tests/       # Capturas de evidencia y pruebas de conectividad
 ├── client/          # cliente en Go (pendiente)
 ├── server/          # servidor de chat en Go (pendiente)
 └── auth-service/    # servicio de autenticación en FastAPI (pendiente)
-```
+## Documentación de las Fases
 
-## Documentación de la Etapa 1
-
+### Fase 1: Planeación de Software
 - [Documento de análisis y especificación de requisitos (PDF)](docs/etapa1/Etapa1_Planeacion_Chat_Empresarial.pdf)
 - [Diagrama general de casos de uso](docs/etapa1/diagramas/01_casos_uso_general.png)
 - [Autenticación y control de sesiones](docs/etapa1/diagramas/02_autenticacion_sesiones.png)
 - [Mensajería e historial](docs/etapa1/diagramas/03_mensajeria_historial.png)
 - [Administración y estadísticas](docs/etapa1/diagramas/04_administracion_estadisticas.png)
 
-La matriz de trazabilidad y la descripción de los casos de uso están dentro del PDF.
+### Fase 2: Prototipo de Red (Infraestructura)
+El diseño de la red que alojará la aplicación (VLANs, enrutamiento, DHCP) fue implementado en Cisco Packet Tracer. Todos los entregables técnicos y evidencias de esta fase se encuentran en el directorio `network/`.
+- [Informe de avance y matriz de pruebas (PDF)](network/Red_Fase2_Prototipo_PacketTracer_ES.pdf)
 
 ## Video de presentación
-
 [Ver video del grupo](https://drive.google.com/drive/folders/1gsS9DFuTsOJIraWtgkEc1jsuhxYSArl_?usp=drive_link)
 
 ## Estado del proyecto
-
-- [x] Etapa 1: planeación del software
+- [x] Fase 1: Planeación del software
+- [x] Fase 2: Prototipo de red en Packet Tracer
 - [ ] Servicio de autenticación (FastAPI)
 - [ ] Servidor de chat (Go)
 - [ ] Cliente (Go)
 - [ ] Estadísticas y pruebas de carga
-
-## Cómo trabajamos
-
-Cada integrante hace sus commits desde su propia cuenta. Escribimos los mensajes con un prefijo que indica el tipo de cambio: `docs:`, `feat:`, `fix:`, `chore:`, `test:`. Antes de subir cambios hacemos `git pull --rebase` para no pisar el trabajo de los demás.
