@@ -1,36 +1,35 @@
 # Chat empresarial cliente-servidor (Go + FastAPI)
 
-Proyecto Integrador de Programación Orientada a Objetos, UIDE, paralelo 3ro A
+Proyecto Integrador — 3.er nivel (Ingeniería en Sistemas de Información, UIDE, Paralelo A)
 
-## Descripción del sistema
+## De qué trata el proyecto
 
-Es una aplicación de chat interno para una empresa. Los empleados inician sesión con una cuenta creada por la organización, escriben en salas o en conversaciones directas, y pueden volver a leer lo que se dijo. Un administrador gestiona cuentas, salas y sesiones, y consulta estadísticas de uso.
+Construimos un sistema de chat interno pensado para comunicar dos sedes de una empresa. La idea es que los empleados inicien sesión con una cuenta corporativa, conversen en tiempo real por salas o mensajes directos y puedan consultar el historial cuando lo necesiten. Del lado administrativo, el sistema permite gestionar cuentas, salas y sesiones activas, además de revisar estadísticas generales de uso sin invadir la privacidad de los mensajes.
 
-La aplicación se divide en tres partes que se comunican entre sí:
+Separamos la solución en tres componentes principales para no mezclar responsabilidades:
 
 | Componente | Carpeta | Tecnología | Qué hace |
 |---|---|---|---|
-| Cliente | `client/` | Go | Pide credenciales, guarda el token, muestra mensajes y estadísticas. |
-| Servidor de chat | `server/` | Go, WebSocket | Recibe, guarda y reenvía mensajes; mantiene salas y presencia; calcula indicadores. |
-| Servicio de autenticación | `auth-service/` | Python, FastAPI, JWT | Guarda cuentas y roles, verifica contraseñas, emite y valida tokens. |
+| Cliente | `client/` | Go | Solicita las credenciales, mantiene el token en memoria y muestra el chat y las estadísticas. |
+| Servidor de chat | `server/` | Go, WebSocket | Recibe, cifra, guarda y reenvía los mensajes; controla quién está en cada sala y calcula indicadores. |
+| Servicio de autenticación | `auth-service/` | Python, FastAPI, JWT | Administra cuentas y roles, verifica contraseñas y emite o revoca tokens de sesión. |
 
-## Problema que resuelve
+## Qué problema buscamos resolver
 
-Cuando una empresa no tiene un canal propio, las conversaciones de trabajo terminan en aplicaciones personales. Nadie controla quién tiene acceso, el historial se pierde cuando alguien cambia de teléfono o se va, y la dirección no puede medir cómo se usa el canal. Un chat interno con cuentas y datos bajo control de la organización resuelve esos tres puntos.
+Cuando una empresa no cuenta con un canal propio, el trabajo diario termina en aplicaciones de mensajería personal. Eso trae tres problemas claros: nadie controla realmente quién sigue teniendo acceso a los grupos, la información se pierde si alguien cambia de teléfono o deja la empresa, y no hay forma de medir el uso del canal. Tener una herramienta interna con cuentas, red y almacenamiento bajo control de la organización resuelve esos tres puntos.
 
-## Alcance preliminar
+## Alcance
 
-**Incluye:** autenticación con roles, mensajes en salas y directos en tiempo real, historial, lista de usuarios conectados, control de sesiones y estadísticas básicas de uso.
+* **Qué incluye:** autenticación con roles (usuario y administrador), chat en tiempo real en salas y mensajes directos, historial persistente, lista de usuarios conectados, control de sesiones y reportes agregados de uso.
+* **Qué queda fuera por ahora:** envío de archivos adjuntos, llamadas de voz o video, cifrado de extremo a extremo, notificaciones push y versión móvil.
 
-**Fuera del alcance, por ahora:** archivos adjuntos, llamadas, cifrado de extremo a extremo, notificaciones push y aplicaciones móviles.
-
-## Integrantes
+## Equipo
 
 | Integrante | Usuario de GitHub |
 |---|---|
-| Cesar Bolivar Arciniegas Mejia | Cxrnvy |
-| Ariel Alejandro Guerrero Velasco | Arialejo01 |
-| Jorge Emilio Aguilar Gaibor | jeaguilarg007-lang |
+| Cesar Bolivar Arciniegas Mejia | [Cxrnvy](https://github.com/Cxrnvy) |
+| Ariel Alejandro Guerrero Velasco | [Arialejo01](https://github.com/Arialejo01) |
+| Jorge Emilio Aguilar Gaibor | [jeaguilarg007-lang](https://github.com/jeaguilarg007-lang) |
 
 ## Estructura del repositorio
 
@@ -39,42 +38,21 @@ Cuando una empresa no tiene un canal propio, las conversaciones de trabajo termi
 ├── README.md
 ├── .gitignore
 ├── docs/
-│   └── etapa1/
-│       ├── Etapa1_Planeacion_Chat_Empresarial.pdf
-│       └── diagramas/
-│           ├── 01_casos_uso_general.png
-│           ├── 02_autenticacion_sesiones.png
-│           ├── 03_mensajeria_historial.png
-│           └── 04_administracion_estadisticas.png
-├── network/         # Fase 2: Prototipo de infraestructura de red
-│   ├── addressing/  # Tablas de direccionamiento VLSM
-│   ├── configs/     # Respaldos de configuración (R-A.txt, SW-A1.txt, etc.)
-│   ├── diagrams/    # Diagrama de arquitectura de red actualizado
-│   ├── packet-tracer/ # Archivo de simulación prototipo_fase2.pkt
-│   └── tests/       # Capturas de evidencia y pruebas de conectividad
-├── client/          # cliente en Go (pendiente)
-├── server/          # servidor de chat en Go (pendiente)
-└── auth-service/    # servicio de autenticación en FastAPI (pendiente)
-## Documentación de las Fases
-
-### Fase 1: Planeación de Software
-- [Documento de análisis y especificación de requisitos (PDF)](docs/etapa1/Etapa1_Planeacion_Chat_Empresarial.pdf)
-- [Diagrama general de casos de uso](docs/etapa1/diagramas/01_casos_uso_general.png)
-- [Autenticación y control de sesiones](docs/etapa1/diagramas/02_autenticacion_sesiones.png)
-- [Mensajería e historial](docs/etapa1/diagramas/03_mensajeria_historial.png)
-- [Administración y estadísticas](docs/etapa1/diagramas/04_administracion_estadisticas.png)
-
-### Fase 2: Prototipo de Red (Infraestructura)
-El diseño de la red que alojará la aplicación (VLANs, enrutamiento, DHCP) fue implementado en Cisco Packet Tracer. Todos los entregables técnicos y evidencias de esta fase se encuentran en el directorio `network/`.
-- [Informe de avance y matriz de pruebas (PDF)](network/Red_Fase2_Prototipo_PacketTracer_ES.pdf)
-
-## Video de presentación
-[Ver video del grupo](https://drive.google.com/drive/folders/1gsS9DFuTsOJIraWtgkEc1jsuhxYSArl_?usp=drive_link)
-
-## Estado del proyecto
-- [x] Fase 1: Planeación del software
-- [x] Fase 2: Prototipo de red en Packet Tracer
-- [ ] Servicio de autenticación (FastAPI)
-- [ ] Servidor de chat (Go)
-- [ ] Cliente (Go)
-- [ ] Estadísticas y pruebas de carga
+│   ├── etapa1/
+│   │   ├── Etapa1_Planeacion_Chat_Empresarial.pdf
+│   │   └── diagramas/
+│   │       ├── 01_casos_uso_general.png
+│   │       ├── 02_autenticacion_sesiones.png
+│   │       ├── 03_mensajeria_historial.png
+│   │       └── 04_administracion_estadisticas.png
+│   └── seguridad/
+│       └── Seguridad_Fase2_Diseno_de_seguridad.pdf
+├── network/           # Fase 2: Prototipo de red entre las dos sedes
+│   ├── addressing/    # Tablas de direccionamiento VLSM
+│   ├── configs/       # Respaldos de configuración (R-A.txt, SW-A1.txt, etc.)
+│   ├── diagrams/      # Diagrama de topología actualizado
+│   ├── packet-tracer/ # Simulación en prototipo_fase2.pkt
+│   └── tests/         # Capturas y pruebas de conectividad
+├── client/            # Cliente en Go (en desarrollo)
+├── server/            # Servidor de chat en Go (en desarrollo)
+└── auth-service/      # Servicio de autenticación en FastAPI (en desarrollo)
