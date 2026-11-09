@@ -1,18 +1,28 @@
+# Sistema operativo y editores
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Go
 *.exe
 *.test
 *.out
 bin/
 vendor/
+
+# Datos generados al ejecutar el chat (los de prueba users.json y rooms.json sí se suben)
+app-go/data/messages.jsonl
+
+# Python (auth-service)
 __pycache__/
 *.pyc
 .venv/
 venv/
 .pytest_cache/
+
+# Secretos y datos locales (nunca se suben)
 .env
 *.db
 *.sqlite
