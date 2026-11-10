@@ -42,7 +42,7 @@ Parámetros configurables:
 | `-addr` | `127.0.0.1:8080` | Dirección IP y puerto en los que escucha el servidor |
 | `-data` | `data` | Carpeta con `users.json`, `rooms.json` y `messages.jsonl` |
 
-En el diseño de red del proyecto, el servidor de chat vive en la VLAN 20 de la Sede A (por ejemplo `-addr 10.10.0.194:8080`).
+En el diseño de red del proyecto, el servidor de chat vive en la VLAN 20 (Servidores) de la Sede A, cuya IP será asignada dentro de la subred `172.16.64.0/18` (por ejemplo `-addr 172.16.64.10:8080`).
 
 ## Ejecutar el cliente
 
@@ -133,9 +133,9 @@ app-go/
 
 | Integrante | Contribución | Usuario de GitHub |
 |---|---|---|
-| Cesar Arciniegas | [COMPLETAR] | Cxrnvy |
-| Ariel Guerrero | [COMPLETAR] | [COMPLETAR] |
-| Jorge Aguilar | [COMPLETAR] | [COMPLETAR] |
+| Cesar Arciniegas | Diseño de la arquitectura general, implementación del servidor TCP, paquete `services` y definición de la interfaz de seguridad. | Cxrnvy |
+| Ariel Guerrero | Diseño de los modelos de dominio (encapsulamiento y POO), persistencia en archivos JSON (`storage`) y pruebas en tiempo real. | Arialejo01 |
+| Jorge Aguilar | Implementación del cliente de consola, protocolo de red, manejo de errores sin panic y ejecución de pruebas unitarias (race conditions). | jeaguilarg007-lang |
 
 Las contribuciones de cada persona se pueden verificar en el historial de commits (`git shortlog -sn`).
 
