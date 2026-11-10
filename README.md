@@ -74,8 +74,8 @@ bash scripts/demo.sh                # demostración automática
 | Integrante | Usuario de GitHub |
 |---|---|
 | Cesar Arciniegas | Cxrnvy |
-| Ariel Guerrero | [COMPLETAR] |
-| Jorge Aguilar | [COMPLETAR] |
+| Ariel Guerrero | Arialejo01 |
+| Jorge Aguilar | jeaguilarg007-lang |
 
 Cada integrante hace sus commits desde su propia cuenta. Los mensajes usan un prefijo (`feat:`, `fix:`, `docs:`, `test:`, `chore:`) y antes de subir cambios se hace `git pull --rebase`.
 
