@@ -1,0 +1,26 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.18, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/claude/repo/auth-service
+plugins: platformdirs-4.13.5, anyio-4.15.1
+collecting ... collected 17 items
+
+tests/test_phase3.py::test_ps01_valid_login_issues_token_and_logs PASSED [  5%]
+tests/test_phase3.py::test_ps02_wrong_password_and_unknown_user_look_identical PASSED [ 11%]
+tests/test_phase3.py::test_ps03_five_failures_lock_account_for_15_minutes PASSED [ 17%]
+tests/test_phase3.py::test_ps03b_a_good_login_resets_the_failure_counter PASSED [ 23%]
+tests/test_phase3.py::test_ps04_protected_resource_rejects_missing_tampered_and_expired_tokens PASSED [ 29%]
+tests/test_phase3.py::test_ps04b_forged_admin_token_signed_with_another_key_is_rejected PASSED [ 35%]
+tests/test_phase3.py::test_ps08_logout_revokes_token_and_idle_session_expires PASSED [ 41%]
+tests/test_phase3.py::test_ps08b_admin_can_revoke_a_live_session PASSED  [ 47%]
+tests/test_phase3.py::test_disabling_a_user_kills_their_sessions PASSED  [ 52%]
+tests/test_phase3.py::test_ps05_admin_can_list_users_and_see_stats PASSED [ 58%]
+tests/test_phase3.py::test_ps06_regular_user_is_denied_admin_functions_and_it_is_logged PASSED [ 64%]
+tests/test_phase3.py::test_ps09_only_argon2id_hashes_are_stored_and_they_differ PASSED [ 70%]
+tests/test_phase3.py::test_password_policy_rejects_short_common_and_username_passwords PASSED [ 76%]
+tests/test_phase3.py::test_duplicate_username_is_rejected PASSED         [ 82%]
+tests/test_phase3.py::test_hash_verification_unit PASSED                 [ 88%]
+tests/test_phase3.py::test_ps13_log_has_date_user_origin_result_and_no_secrets PASSED [ 94%]
+tests/test_phase3.py::test_service_refuses_to_start_without_a_secret PASSED [100%]
+
+============================= 17 passed in 11.38s ==============================

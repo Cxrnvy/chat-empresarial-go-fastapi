@@ -27,3 +27,9 @@ venv/
 *.db
 *.sqlite
 *.log
+
+# Fase 3 - FastAPI Auth
+.env
+*.db
+*.log
+.venv/

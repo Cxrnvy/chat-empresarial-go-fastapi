@@ -1,0 +1,69 @@
+
+=== 0. Create the first administrator with the CLI (password read from the environment, never printed)
+Administrator 'admin_ana' created.
+
+=== 1. AUTHENTICATION: valid login (PS-01)
+  POST /auth/login -> HTTP 200  {"access_token": "eyJhbGciOiJIUz...(masked)", "token_type": "bearer", "expires_in": 28800, "role": "admin"}
+
+=== 2. USER CREATION by an administrator, including a weak password (RF-SEC-02)
+  POST /admin/users -> HTTP 422  {"detail": "Password must have at least 12 characters."}
+  POST /admin/users -> HTTP 422  {"detail": "Password is in the list of commonly used passwords."}
+  POST /admin/users -> HTTP 201  {"username": "maria_perez", "role": "user", "active": true}
+  POST /admin/users -> HTTP 201  {"username": "jorge_diaz", "role": "user", "active": true}
+
+=== 3. INVALID CREDENTIALS: wrong password vs. unknown user give the same answer (PS-02)
+  POST /auth/login -> HTTP 401  {"detail": "Incorrect username or password."}
+  POST /auth/login -> HTTP 401  {"detail": "Incorrect username or password."}
+
+=== 4. AUTHORIZATION: allowed vs. denied (PS-05, PS-06)
+  POST /auth/login -> HTTP 200  {"access_token": "eyJhbGciOiJIUz...(masked)", "token_type": "bearer", "expires_in": 28800, "role": "user"}
+  GET /auth/validate -> HTTP 200  {"username": "maria_perez", "role": "user"}
+  GET /admin/stats -> HTTP 403  {"detail": "You do not have permission to do this."}
+  POST /admin/users -> HTTP 403  {"detail": "You do not have permission to do this."}
+  GET /admin/stats -> HTTP 200  {"users": 3, "admins": 1, "active_sessions": 2}
+  GET /admin/users -> HTTP 200  [{"username": "admin_ana", "role": "admin", "active": true}, {"username": "jorge_diaz", "role": "user", "active": true}, {"username": "maria_perez", "role": "user", "active": true}]
+
+=== 5. TOKEN CHECKS (PS-04): no token and a tampered token
+  GET /auth/validate -> HTTP 401  {"detail": "Invalid or expired session."}
+  GET /auth/validate -> HTTP 401  {"detail": "Invalid or expired session."}
+
+=== 6. LOGOUT, then reuse the closed token (PS-08)
+  POST /auth/logout -> HTTP 200  {"detail": "Session closed."}
+  GET /auth/validate -> HTTP 401  {"detail": "Invalid or expired session."}
+
+=== 7. LOCKOUT after 5 failures, then the CORRECT password is still refused (PS-03)
+  POST /auth/login -> HTTP 401  {"detail": "Incorrect username or password."}
+  POST /auth/login -> HTTP 401  {"detail": "Incorrect username or password."}
+  POST /auth/login -> HTTP 401  {"detail": "Incorrect username or password."}
+  POST /auth/login -> HTTP 401  {"detail": "Incorrect username or password."}
+  POST /auth/login -> HTTP 401  {"detail": "Incorrect username or password."}
+  POST /auth/login -> HTTP 401  {"detail": "Incorrect username or password."}
+
+=== 8. CREDENTIAL STORAGE: what the database really holds (PS-09)
+  admin_ana   $argon2id$v=19$m=65536,t=3,p=4$7wXCG/h+W5IHSlv3KE2IjQ$FddQ...
+  jorge_diaz  $argon2id$v=19$m=65536,t=3,p=4$G4LVNaq6F8xePx89nHAkRQ$P/Dx...
+  maria_perez $argon2id$v=19$m=65536,t=3,p=4$OwjgRG9OAx6bK0z2C4YeVg$yUL6...
+  'admin demo password' found inside the database file? False
+  'user demo password' found inside the database file? False
+  maria_perez and jorge_diaz share a password; same hash?  False
+
+=== 9. EVENT LOG (PS-13): selected lines and a search for secrets
+  {"ts": "2026-11-15T14:18:59+00:00", "event": "login_success", "user": "admin_ana", "origin": "127.0.0.1", "result": "allowed"}
+  {"ts": "2026-11-15T14:19:00+00:00", "event": "user_create", "user": "admin_ana", "origin": "127.0.0.1", "result": "denied", "target": "maria_perez", "reason": "weak_password"}
+  {"ts": "2026-11-15T14:19:00+00:00", "event": "user_create", "user": "admin_ana", "origin": "127.0.0.1", "result": "allowed", "target": "maria_perez", "role": "user"}
+  {"ts": "2026-11-15T14:19:00+00:00", "event": "login_failure", "user": "maria_perez", "origin": "127.0.0.1", "result": "denied", "reason": "bad_password"}
+  {"ts": "2026-11-15T14:19:00+00:00", "event": "login_failure", "user": "nobody_here", "origin": "127.0.0.1", "result": "denied", "reason": "unknown_user"}
+  {"ts": "2026-11-15T14:19:00+00:00", "event": "access_denied", "user": "maria_perez", "origin": "127.0.0.1", "result": "denied", "resource": "/admin/stats", "role": "user"}
+  {"ts": "2026-11-15T14:19:01+00:00", "event": "token_rejected", "user": null, "origin": "127.0.0.1", "result": "denied", "reason": "missing_token"}
+  {"ts": "2026-11-15T14:19:01+00:00", "event": "token_rejected", "user": null, "origin": "127.0.0.1", "result": "denied", "reason": "bad_signature_or_format"}
+  {"ts": "2026-11-15T14:19:01+00:00", "event": "logout", "user": "maria_perez", "origin": "127.0.0.1", "result": "allowed"}
+  {"ts": "2026-11-15T14:19:01+00:00", "event": "token_rejected", "user": "maria_perez", "origin": "127.0.0.1", "result": "denied", "reason": "revoked"}
+  {"ts": "2026-11-15T14:19:01+00:00", "event": "account_locked", "user": "jorge_diaz", "origin": "127.0.0.1", "result": "denied", "lock_seconds": 900}
+  {"ts": "2026-11-15T14:19:02+00:00", "event": "login_failure", "user": "jorge_diaz", "origin": "127.0.0.1", "result": "denied", "reason": "account_locked"}
+  'Demo-Admin-Phrase-2026' found in log? False
+  'Demo-User-Phrase-2026' found in log? False
+  'Wrong-Phrase-12345' found in log? False
+  'corta123' found in log? False
+  log file permissions: -rw-------
+
+Demo finished. Temporary data: /tmp/tmp.VpBB1aOnwe
